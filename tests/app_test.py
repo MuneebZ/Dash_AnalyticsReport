@@ -4,8 +4,9 @@ import dash
 from dash import dcc, html
 
 # Load in the data for charging points, vehicles, and the merged data
-df_charging_point_melt = pd.read_csv("df_charging_point_melt.csv")  # Task 1
-df_vehicle_melt = pd.read_csv("df_vehicle_melt.csv")  # Task 2
+df_charging_point_melt = pd.read_csv(
+    "data/df_charging_point_melt.csv")  # Task 1
+df_vehicle_melt = pd.read_csv("data/df_vehicle_melt.csv")  # Task 2
 
 column_types = {'ONS Code [note 6]': str,
                 'ONS Geography [note 6]': str,
@@ -14,7 +15,8 @@ column_types = {'ONS Code [note 6]': str,
                 'Local Authority / Region Name': str,
                 'value_y': float}
 
-merged_df = pd.read_csv("merged_df.csv", dtype=column_types, parse_dates=['date', 'time'])  # Task 3
+merged_df = pd.read_csv("data/merged_df.csv", dtype=column_types,
+                        parse_dates=['date', 'time'])  # Task 3
 
 # Create a new column 'ratio' that is the ratio of charging points to vehicles
 merged_df['ratio'] = merged_df['value_y'] / merged_df['value_x']
@@ -37,8 +39,8 @@ fig_electric_cars = px.line(df_vehicle_melt.dropna(), x="date", y="value", color
                                 "date": "Date (in quarters)",
                                 "value": "Charging points per 100,000 population",
                                 "ONS Geography [note 6]": "Local Authority / Region Name"
-                            },
-                            title="Number of electric vehicles registered over Time")
+},
+    title="Number of electric vehicles registered over Time")
 
 # 3. Create the third graph using px.line and store it in a variable
 fig_ratio = px.line(merged_df.dropna(), x="date", y="ratio", color='ONS Geography [note 6]',
@@ -46,8 +48,8 @@ fig_ratio = px.line(merged_df.dropna(), x="date", y="ratio", color='ONS Geograph
                         "date": "Date (in quarters)",
                         "ratio": "Total Number of Charge Points per Electric Cars",
                         "ONS Geography [note 6]": "Local Authority / Region Name"
-                    },
-                    title="Total Number of Charge Points per Electric Cars over Time")
+},
+    title="Total Number of Charge Points per Electric Cars over Time")
 
 app.layout = html.Div([
     # Use dcc.Graph to display the first graph
@@ -67,5 +69,6 @@ app.layout = html.Div([
     ),
 ])
 
+# Run the server locally
 if __name__ == '__main__':
     app.run_server(debug=True)
