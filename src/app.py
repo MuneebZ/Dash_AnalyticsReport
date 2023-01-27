@@ -5,8 +5,9 @@ from dash import dcc, html
 from dash.dependencies import Input, Output
 
 # Load in the data for charging points, vehicles, and the merged data
-df_charging_point_melt = pd.read_csv("df_charging_point_melt.csv")  # Task 1
-df_vehicle_melt = pd.read_csv("df_vehicle_melt.csv")  # Task 2
+df_charging_point_melt = pd.read_csv(
+    "data/df_charging_point_melt.csv")  # Task 1
+df_vehicle_melt = pd.read_csv("data/df_vehicle_melt.csv")  # Task 2
 
 column_types = {'ONS Code [note 6]': str,
                 'ONS Geography [note 6]': str,
@@ -15,7 +16,7 @@ column_types = {'ONS Code [note 6]': str,
                 'Local Authority / Region Name': str,
                 'value_y': float}
 
-merged_df = pd.read_csv("merged_df.csv", dtype=column_types,
+merged_df = pd.read_csv("data/merged_df.csv", dtype=column_types,
                         parse_dates=['date', 'time'])  # Task 3
 
 # Create a new column 'ratio' that is the ratio of charging points to vehicles
